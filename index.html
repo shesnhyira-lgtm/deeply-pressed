@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deeply Pressed</title>
+<style>
+body{margin:0;font:16px/1.5 -apple-system,sans-serif;background:#f6f4ef;color:#22312f}
+.crisis{background:#b3452f;color:#fff;padding:8px;font-size:12px;text-align:center}
+header{background:#2f5d57;color:#fff;padding:12px 16px;display:flex;gap:10px;align-items:center}
+header b{flex:1;font-size:18px}
+header select{background:rgba(255,255,255,.15);color:#fff;border:1px solid #fff5;border-radius:8px;padding:6px}
+header select option{color:#000}
+main{max-width:600px;margin:auto;padding:16px}
+.card{background:#fff;border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 1px 4px #22312f14}
+h1{font-size:24px;margin:0 0 6px}
+h2{font-size:18px;margin:0 0 10px}
+input,textarea{width:100%;padding:12px;border:1px solid #d5ddd9;border-radius:12px;font-size:16px;font-family:inherit;margin-bottom:10px;box-sizing:border-box}
+.btn{background:#2f5d57;color:#fff;border:0;border-radius:12px;padding:13px;font-size:16px;font-weight:600;width:100%;font-family:inherit}
+.link{background:none;border:0;color:#2f5d57;text-decoration:underline;font-size:14px;padding:10px 0 0;width:100%;font-family:inherit}
+.err{color:#b3452f;font-size:13px;min-height:16px}
+.moods{display:flex;gap:6px}
+.moods button{flex:1;background:#fff;border:2px solid #e3e9e6;border-radius:12px;padding:8px 2px;font-family:inherit;font-size:22px}
+.moods button.on{border-color:#2f5d57;background:#eef3f1}
+nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e3e9e6;display:flex}
+nav button{flex:1;background:none;border:0;padding:10px 2px;font-family:inherit;font-size:11px;color:#8b9a97}
+nav button.on{color:#2f5d57;font-weight:700}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="crisis">In crisis? US: 988 · UK: 116 123 · FR: 3114 · ES: 024 · GH: 0800 111 222</div>
+<header>
+  <b>Deeply Pressed</b>
+  <select id="lang">
+    <option value="en">English</option>
+    <option value="fr">Français</option>
+    <option value="es">Español</option>
+  </select>
+</header>
+<main>
+  <section id="auth" class="card">
+    <h1>Deeply Pressed</h1>
+    <p id="tag" style="color:#6b7c79;font-size:14px">You don't have to carry it alone.</p>
+    <h2 id="authTitle" style="margin-top:14px">Log in</h2>
+    <input id="name" placeholder="Your name" hidden>
+    <input id="email" type="email" placeholder="Email">
+    <input id="pass" type="password" placeholder="Password">
+    <button id="submit" class="btn">Log in</button>
+    <p id="err" class="err"></p>
+    <button id="toggle" class="link">New here? Create an account</button>
+  </section>
+  <section id="app" hidden>
+    <div id="t_home">
+      <h2><span id="welcome">Welcome back</span>, <span id="uname"></span></h2>
+      <p id="how" style="font-size:16px">How are you feeling today?</p>
+      <div class="moods" id="moods"></div>
+      <p id="mmsg" style="color:#6b7c79;font-size:14px;min-height:20px"></p>
+    </div>
+    <div id="t_community" hidden>
+      <h2 id="communityT">Community</h2>
+      <div id="chat" style="background:#fff;border-radius:16px;padding:12px;min-height:180px;margin-bottom:12px"></div>
+      <form id="chatForm" style="display:flex;gap:8px">
+        <input id="chatIn" placeholder="Write something supportive...">
+        <button class="btn" style="width:auto;padding:12px 16px">Send</button>
+      </form>
+    </div>
+    <div id="t_journal" hidden>
+      <h2 id="journalT">Private journal</h2>
+      <textarea id="jIn" rows="5" placeholder="What's on your mind?"></textarea>
+      <button id="jSave" class="btn">Save</button>
+      <div id="jList" style="margin-top:14px"></div>
+    </div>
+    <button id="logout" class="link" style="margin-top:20px">Log out</button>
+  </section>
+</main>
+<nav id="nav" hidden>
+  <button data-t="home" class="on">🏠 Home</button>
+  <button data-t="community">💬 Community</button>
+  <button data-t="journal">📖 Journal</button>
+</nav>
+<script>
+var T={
+en:{tag:"You don't have to carry it alone.",login:"Log in",signup:"Create your account",name:"Your name",email:"Email",password:"Password",create:"Create account",noAcc:"New here? Create an account",have:"Already have an account? Log in",logout:"Log out",welcome:"Welcome back",home:"Home",community:"Community",journal:"Journal",how:"How are you feeling today?",moods:["Great","Good","Okay","Low","Struggling"],msgs:["Lovely to hear.","Glad today is kind.","Okay is okay.","Thanks for being honest.","That sounds heavy."],journalP:"What's on your mind?",save:"Save",chatP:"Write something supportive...",errFill:"Fill in every field.",errShort:"Password must be 6+ characters.",errExists:"Email already registered.",errLogin:"Wrong email or password."},
+fr:{tag:"Vous n'avez pas à porter cela seul.",login:"Se connecter",signup:"Créer votre compte",name:"Votre nom",email:"E-mail",password:"Mot de passe",create:"Créer un compte",noAcc:"Nouveau ? Créer un compte",have:"Déjà un compte ? Se connecter",logout:"Se déconnecter",welcome:"Bon retour",home:"Accueil",community:"Communauté",journal:"Journal",how:"Comment vous sentez-vous ?",moods:["Très bien","Bien","Moyen","Bas","Difficile"],msgs:["C'est bon à entendre.","Content que ce soit doux.","Moyen, c'est bien.","Merci pour votre honnêteté.","Cela semble lourd."],journalP:"Qu'avez-vous en tête ?",save:"Enregistrer",chatP:"Écrivez un message de soutien...",errFill:"Remplissez tous les champs.",errShort:"6 caractères minimum.",errExists:"E-mail déjà enregistré.",errLogin:"E-mail ou mot de passe incorrect."},
+es:{tag:"No tienes que cargar con esto solo.",login:"Iniciar sesión",signup:"Crea tu cuenta",name:"Tu nombre",email:"Correo",password:"Contraseña",create:"Crear cuenta",noAcc:"¿Nuevo? Crea una cuenta",have:"¿Ya tienes cuenta? Inicia sesión",logout:"Cerrar sesión",welcome:"Bienvenido",home:"Inicio",community:"Comunidad",journal:"Diario",how:"¿Cómo te sientes hoy?",moods:["Muy bien","Bien","Normal","Bajo","Difícil"],msgs:["Me alegra oírlo.","Qué bueno que sea amable.","Normal está bien.","Gracias por tu honestidad.","Suena pesado."],journalP:"¿Qué tienes en mente?",save:"Guardar",chatP:"Escribe algo de apoyo...",errFill:"Completa todos los campos.",errShort:"Mínimo 6 caracteres.",errExists:"Correo ya registrado.",errLogin:"Correo o contraseña incorrectos."}
+};
+var lang="en",signup=false,user=null,data=null;
+function $(i){return document.getElementById(i)}
+function t(k){return T[lang][k]}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return v===undefined?null:v}}
+function users(){try{return JSON.parse(store("dp_u")||"{}")}catch(e){return{}}}
+function draw(){
+  document.documentElement.lang=lang;$("lang").value=lang;
+  $("tag").textContent=t("tag");
+  $("authTitle").textContent=signup?t("signup"):t("login");
+  $("name").placeholder=t("name");$("name").hidden=!signup;
+  $("email").placeholder=t("email");$("pass").placeholder=t("password");
+  $("submit").textContent=signup?t("create"):t("login");
+  $("toggle").textContent=signup?t("have"):t("noAcc");
+  $("welcome").textContent=t("welcome");$("how").textContent=t("how");
+  $("communityT").textContent=t("community");$("journalT").textContent=t("journal");
+  $("jIn").placeholder=t("journalP");$("jSave").textContent=t("save");
+  $("chatIn").placeholder=t("chatP");$("logout").textContent=t("logout");
+  var nb=document.querySelectorAll("nav button");
+  nb[0].innerHTML="🏠 "+t("home");nb[1].innerHTML="💬 "+t("community");nb[2].innerHTML="📖 "+t("journal");
+}
+function drawMoods(){
+  var m=$("moods");m.innerHTML="";
+  for(var i=0;i<5;i++){(function(i){
+    var b=document.createElement("button");
+    b.textContent=["😄","🙂","😐","😔","😢"][i];
+    b.onclick=function(){data.mood=i;save();drawMoods();$("mmsg").textContent=t("msgs")[i]};
+    if(data&&data.mood===i)b.className="on";
+    m.appendChild(b);
+  })(i)}
+}
+function save(){try{store("dp_d_"+user,JSON.stringify(data))}catch(e){}}
+$("lang").onchange=function(e){lang=e.target.value;draw()};
+$("toggle").onclick=function(){signup=!signup;$("err").textContent="";draw()};
+$("submit").onclick=function(){
+  var n=$("name").value.trim(),e=$("email").value.trim().toLowerCase(),p=$("pass").value;
+  if(!e||!p||(signup&&!n)){$("err").textContent=t("errFill");return}
+  if(signup&&p.length<6){$("err").textContent=t("errShort");return}
+  var u=users();
+  if(signup){if(u[e]){$("err").textContent=t("errExists");return}u[e]={n:n,p:p};store("dp_u",JSON.stringify(u))}
+  else{if(!u[e]||u[e].p!==p){$("err").textContent=t("errLogin");return}}
+  user=e;store("dp_s",e);enter();
+};
+function enter(){
+  var u=users()[user];
+  $("uname").textContent=u?u.n.split(" ")[0]:"";
+  try{data=JSON.parse(store("dp_d_"+user)||"null")}catch(e){data=null}
+  if(!data)data={mood:-1,journal:[],chat:["Rough morning, but I made it here.","Glad you're here."]};
+  save();
+  $("auth").hidden=true;$("app").hidden=false;$("nav").hidden=false;
+  drawMoods();drawChat();drawJournal();
+}
+function drawChat(){
+  $("chat").innerHTML=data.chat.map(function(m){return '<div style="background:#eef3f1;border-radius:12px;padding:8px 12px;margin-bottom:8px;font-size:14px">'+esc(m)+'</div>'}).join("");
+}
+$("chatForm").onsubmit=function(e){
+  e.preventDefault();var v=$("chatIn").value.trim();if(!v)return;
+  data.chat.push(v);save();$("chatIn").value="";drawChat();
+};
+function drawJournal(){
+  $("jList").innerHTML=data.journal.slice().reverse().map(function(j){return '<div style="background:#fff;border-radius:12px;padding:10px 12px;margin-bottom:8px;font-size:14px">'+esc(j)+'</div>'}).join("");
+}
+$("jSave").onclick=function(){var v=$("jIn").value.trim();if(!v)return;data.journal.push(v);save();$("jIn").value="";drawJournal()};
+$("logout").onclick=function(){user=null;store("dp_s","");$("app").hidden=true;$("nav").hidden=true;$("auth").hidden=false;signup=false;draw()};
+document.querySelectorAll("nav button").forEach(function(b){
+  b.onclick=function(){
+    document.querySelectorAll("nav button").forEach(function(x){x.className=""});
+    b.className="on";
+    ["home","community","journal"].forEach(function(n){$("t_"+n).hidden=(n!==b.getAttribute("data-t"))});
+  };
+});
+draw();
+var s=store("dp_s");
+if(s&&users()[s]){user=s;enter()}
+</script>
+</body>
+</html>
